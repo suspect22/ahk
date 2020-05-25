@@ -26,3 +26,9 @@
 | vup   | "vagrant up "   |
 | vdo  | "vagrant halt "  |
 | ap | "ansible-playbook " |
+
+| Header 1 | Header 2 | Header 3 |
+|---|---|---|
+| Row  Column   | Row  Column   | Row  Column   |
+| Row  Column   | Row  Column   | Row  Column   |
+| Row  Column   | Row  Column   | Row  Column   |

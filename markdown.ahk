@@ -9,12 +9,12 @@ return
 ; Added an elevation option
 OpenCmdInCurrent(elevated)
 {
-
+    OutputDebug, IsElemevated: %elevated%
     ; This is required to get the full path of the file from the address bar
     WinGetText, full_path, A
     WinGetActiveTitle, title
 
-    MsgBox, Elevated %elevated%, Path %full_path%, Title %title%
+    
 
     ; Split on newline (`n)
     StringSplit, word_array, full_path, `n
@@ -22,30 +22,27 @@ OpenCmdInCurrent(elevated)
     ; Find and take the element from the array that contains address
     Loop, %word_array0%
     {
-        IfInString, word_array%A_Index%, Address
+        current_value := word_array%A_Index%
+        IfInString, current_value, Adresse
         {
             full_path := word_array%A_Index%
             break
         }
-    }  
+    }
 
     ; strip to bare address
-    full_path := RegExReplace(full_path, "^Addresse: ", "")
+    full_path := RegExReplace(full_path, "^Adresse: ", "")
 
     ; Just in case - remove all carriage returns (`r)
     StringReplace, full_path, full_path, `r, , all
-    !IfInString full_path, \
-    {
-        EnvGet, full_path, USERPROFILE
-    }
 
     if elevated
     {
             Try
             {
-                Run *Runas, cmd /K cd /d "%full_path%"
+                Run *Runas "cmd.exe" /K cd /d "%full_path%"
             }
-            Catch
+            Catch e
             {
                 ; If elevation fails
                 exit
